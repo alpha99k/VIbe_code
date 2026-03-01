@@ -1,0 +1,19 @@
+[debug] [2026-03-01T19:43:27.961Z] ----------------------------------------------------------------------
+[debug] [2026-03-01T19:43:27.963Z] Command:       /Users/alpaca/.nvm/versions/node/v24.14.0/bin/node /Users/alpaca/.nvm/versions/node/v24.14.0/bin/firebase init
+[debug] [2026-03-01T19:43:27.963Z] CLI Version:   15.8.0
+[debug] [2026-03-01T19:43:27.963Z] Platform:      darwin
+[debug] [2026-03-01T19:43:27.963Z] Node Version:  v24.14.0
+[debug] [2026-03-01T19:43:27.964Z] Time:          Mon Mar 02 2026 04:43:27 GMT+0900 (Korean Standard Time)
+[debug] [2026-03-01T19:43:27.964Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/alpaca/Desktop/web/Tetris_web
+

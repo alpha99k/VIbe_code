@@ -1,3 +1,18 @@
+// Firebase 설정 (본인의 Firebase 프로젝트 설정값으로 교체해야 합니다)
+const firebaseConfig = {
+    apiKey: "YAIzaSyCpKwU5kcqZi8VMV3ICpdUkTW-SO2WZD_8",
+    authDomain: "ibe-tetris.firebaseapp.com",
+    projectId: "vibe-tetris",
+    storageBucket: "vibe-tetris.firebasestorage.app",
+    messagingSenderId: "300839641451",
+    appId: "1:300839641451:web:89227b63ec57fb5d452c2e",
+    measurementId: "G-0Y5TREHVC4"
+};
+
+// Firebase 초기화
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const nextCanvas = document.getElementById('next');
@@ -394,27 +409,45 @@ function updateScore() {
     scoreElement.innerText = player.score;
 }
 
+// 랭킹 로드 (Firebase 사용)
 function loadRankings() {
-    const rankings = JSON.parse(localStorage.getItem('tetrisRankings')) || [];
-    rankingList.innerHTML = '';
-    const ordinals = ['1ST.', '2ND.', '3RD.', '4TH.', '5TH.'];
-    const colors_rank = ['#ffd700', '#c0c0c0', '#cd7f32', '#ffffff', '#ffffff'];
-    
-    rankings.forEach((entry, index) => {
-        const li = document.createElement('li');
-        li.style.color = colors_rank[index]; // 순위에 따른 색상 적용
-        li.innerHTML = `<span>${ordinals[index]} ${entry.name}</span> <span>${entry.score}</span>`;
-        rankingList.appendChild(li);
-    });
+    db.collection("rankings")
+      .orderBy("score", "desc")
+      .limit(5)
+      .get()
+      .then((querySnapshot) => {
+          rankingList.innerHTML = '';
+          const ordinals = ['1ST.', '2ND.', '3RD.', '4TH.', '5TH.'];
+          const colors_rank = ['#ffd700', '#c0c0c0', '#cd7f32', '#ffffff', '#ffffff'];
+          
+          let index = 0;
+          querySnapshot.forEach((doc) => {
+              const entry = doc.data();
+              const li = document.createElement('li');
+              li.style.color = colors_rank[index];
+              li.innerHTML = `<span>${ordinals[index]} ${entry.name}</span> <span>${entry.score}</span>`;
+              rankingList.appendChild(li);
+              index++;
+          });
+      })
+      .catch((error) => {
+          console.error("Error getting rankings: ", error);
+      });
 }
 
+// 랭킹 저장 (Firebase 사용)
 function saveRanking(name, score) {
-    let rankings = JSON.parse(localStorage.getItem('tetrisRankings')) || [];
-    rankings.push({ name, score });
-    rankings.sort((a, b) => b.score - a.score);
-    rankings = rankings.slice(0, 5); 
-    localStorage.setItem('tetrisRankings', JSON.stringify(rankings));
-    loadRankings();
+    db.collection("rankings").add({
+        name: name,
+        score: score,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+        loadRankings();
+    })
+    .catch((error) => {
+        console.error("Error adding ranking: ", error);
+    });
 }
 
 const colors = [
@@ -477,7 +510,6 @@ saveScoreBtn.addEventListener('click', () => {
     saveRanking(name, player.score);
     modal.style.display = 'none';
     startBtn.style.display = 'block';
-    // 점수 저장 후에는 게임이 리셋된 상태로 대기해야 하므로 resetGame만 호출
     resetGame();
 });
 
@@ -497,6 +529,5 @@ function resetGame() {
     clearInterval(timerInterval);
 }
 
-// 처음 페이지 로드 시 랭킹만 로드하고 게임 루프는 시작하지 않음
 loadRankings();
-draw(); // 초기 화면 한 번 그리기
+draw();
