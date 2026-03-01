@@ -1,0 +1,211 @@
+body {
+    background: #1a1a2e;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.main-title h1 {
+    font-size: 2.5em;
+    letter-spacing: 5px;
+    margin-bottom: 30px;
+}
+
+.main-title h1 span:nth-child(1) { color: #ff0040; text-shadow: 4px 4px 0px #be2633; } /* T */
+.main-title h1 span:nth-child(2) { color: #ffa300; text-shadow: 4px 4px 0px #ffa300; } /* E */
+.main-title h1 span:nth-child(3) { color: #ffec27; text-shadow: 4px 4px 0px #ffa300; } /* T */
+.main-title h1 span:nth-child(4) { color: #00e756; text-shadow: 4px 4px 0px #00e756; } /* R */
+.main-title h1 span:nth-child(5) { color: #29adff; text-shadow: 4px 4px 0px #29adff; } /* I */
+.main-title h1 span:nth-child(6) { color: #ff77a8; text-shadow: 4px 4px 0px #be2633; } /* S */
+
+.game-container {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    padding: 25px;
+    border: 6px solid #fff;
+    background: #000;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+}
+
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+canvas#tetris {
+    border: 4px solid #444;
+    background-color: #000;
+}
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 220px;
+}
+
+.info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.stage-box, .time-box, .score-box, .next-box, .ranking-box, .controls {
+    background: #000;
+    padding: 15px;
+    border: 4px solid #fff;
+    text-align: center;
+    box-shadow: 4px 4px 0px #333;
+}
+
+.stage-box p, .time-box p, .score-box p, .next-box p, .ranking-box p, .controls p {
+    margin: 0 0 10px 0;
+    font-size: 0.6em;
+    color: #f1c40f;
+}
+
+#stage, #timer, #score {
+    font-size: 1.2em;
+    font-weight: bold;
+    display: block;
+}
+
+#timer { color: #e74c3c; }
+#stage { color: #2ecc71; }
+#score { color: #3498db; }
+
+.next-box {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.next-box canvas {
+    background: #111;
+    border: 2px solid #444;
+    margin-top: 10px;
+}
+
+.controls {
+    text-align: left;
+    font-size: 0.5em;
+    line-height: 1.8;
+}
+
+.controls strong {
+    display: block;
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 1.2em;
+    text-decoration: underline;
+}
+
+.ranking-box {
+    min-height: 150px;
+    font-size: 0.5em;
+    padding: 15px 0px; /* 좌우 패딩을 0으로 만들어 내부 선이 꽉 차게 함 */
+}
+
+.ranking-box p {
+    text-align: center;
+    padding: 0 15px 10px 15px; /* 제목에는 패딩 유지 */
+    border-bottom: 4px solid #333;
+    margin-bottom: 0;
+}
+
+#ranking-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#ranking-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px; /* 리스트 내부에 패딩을 주어 텍스트 위치 조절 */
+    border-bottom: 2px solid #333;
+}
+
+#ranking-list li:last-child {
+    border-bottom: none;
+}
+
+#start-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 15px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em;
+    background: #e67e22;
+    color: white;
+    border: 4px solid #fff;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px #8e44ad;
+}
+
+#start-btn:hover {
+    background: #f39c12;
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #8e44ad;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #000;
+    padding: 40px;
+    border: 6px solid #f1c40f;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+}
+
+.modal-content h2 {
+    font-size: 1.5em;
+    color: #e74c3c;
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    font-size: 0.8em;
+}
+
+.modal-content input {
+    padding: 15px;
+    margin: 25px 0;
+    border: 4px solid #fff;
+    background: #222;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7em;
+    width: 80%;
+}
+
+#save-score-btn {
+    padding: 10px;
+    font-family: 'Press Start 2P', cursive;
+    background: #27ae60;
+    color: white;
+    border: 4px solid #fff;
+}
